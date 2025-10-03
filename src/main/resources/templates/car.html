@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html brand="ru" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+
+<head>
+    <title>Список автомобилей</title>
+</head>
+
+<body>
+    <main layout:fragment="content">
+        <th:block th:switch="${items.size()}">
+            <h2 th:case="0">Данные отсутствуют</h2>
+            <th:block th:case="*">
+                <div class="container" style="text-align: center; color: black; font-size: 30px;">
+                    <h2>Каталог автомобилей</h2>
+                </div>
+
+                <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+                    <div th:each="car : ${items}" style="padding: 10px 10px 10px 10px;  flex-wrap: wrap;">
+                        <div th:text="${car.name}" style="color: black; font-size: 30px;"></div>
+                        <div>
+                            <img src="/photo.jpg" alt="IMAGE" width="400" height="500" />
+                            <div th:text="${car.description}" style="color: black; font-size: 20px;"></div>
+                            <div style="color: black; font-size: 20px;">
+                                Цена: <span th:text="${car.price}"></span>
+                            </div>
+                            <div style="display: flex; justify-content: center;">
+                                <form
+                                    th:action="${car.isDesired} ? @{/car/disdesire1/{id}(id=${car.id}, page=${page})} : @{/car/desire/{id}(id=${car.id}, page=${page})}"
+                                    method="post">
+                                    <button type="submit" class="btn btn-dark text-big"
+                                        th:text="${car.isDesired} ? 'Убрать из желаемого' : 'Добавить в желаемое'"></button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </th:block>
+        </th:block>
+        <th:block th:replace="~{ pagination :: pagination (
+                                url=${'list/car'},
+                                totalPages=${totalPages},
+                                currentPage=${currentPage}) }" />
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html brand="ru" data-bs-theme="dark" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Автосалон</title>
+    <script type="text/javascript" src="/webjars/bootstrap/5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body class="h-100 d-flex flex-column">
+    <nav class="navbar navbar-expand-md my-navbar" style="justify-content: center;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-car-front-fill d-inline-block align-top me-1 logo" style="color: black;"></i>
+            </a>
+            <th:block sec:authorize="isAuthenticated()" th:with="userName=${#authentication.name}">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar"
+                    aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="main-navbar" style="justify-content: center;">
+                    <ul class="navbar-nav me-auto link" th:with="activeLink=${#objects.nullSafe(servletPath, '')}"
+                        style="justify-content: center;">
+                        <a class="nav-link" href="/list/car"
+                            th:classappend="${activeLink.startsWith('/list/car') ? 'active' : ''}">
+                            Каталог автомобилей
+                        </a>
+                        <a class="nav-link" href="/car/desire"
+                            th:classappend="${activeLink.startsWith('/car/desire') ? 'active' : ''}">
+                            Желаемое
+                        </a>
+
+                        <th:block sec:authorize="hasRole('ADMIN')">
+                            <a class="nav-link" href="/admin/user"
+                                th:classappend="${activeLink.startsWith('/admin/user') ? 'active' : ''}">
+                                Пользователи
+                            </a>
+                            <a class="nav-link" href="/admin/brand"
+                                th:classappend="${activeLink.startsWith('/admin/brand') ? 'active' : ''}">
+                                Марки
+                            </a>
+                            <a class="nav-link" href="/admin/pack"
+                                th:classappend="${activeLink.startsWith('/admin/pack') ? 'active' : ''}">
+                                Пакеты
+                            </a>
+                            <a class="nav-link" href="/admin/car"
+                                th:classappend="${activeLink.startsWith('/admin/car') ? 'active' : ''}">
+                                Автомобили
+                            </a>
+                        </th:block>
+
+                    </ul>
+                    <ul class="navbar-nav" th:if="${not #strings.isEmpty(userName)}">
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="navbar-brand nav-link" onclick="return confirm('Вы уверены?')">
+                                Выход ([[${userName}]])
+                            </button>
+                        </form>
+                    </ul>
+                </div>
+            </th:block>
+        </div>
+    </nav>
+    <main class="container-fluid p-2" layout:fragment="content">
+    </main>
+    <footer class="my-footer mt-auto d-flex flex-shrink-0 justify-content-center align-items-center">
+        Автор, [[${#dates.year(#dates.createNow())}]]
+    </footer>
+</body>
+
+</html>

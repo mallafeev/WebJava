@@ -1,0 +1,121 @@
+html,
+body {
+    height: 100%;
+    background-color: #8acf96;
+}
+
+h1 {
+    font-size: 1.5em;
+}
+
+h2 {
+    font-size: 1.25em;
+}
+
+h3 {
+    font-size: 1.1em;
+}
+
+td form {
+    margin: 0;
+    padding: 0;
+    margin-top: -.25em;
+}
+
+.button-fixed-width {
+    width: 150px;
+}
+
+.button-link {
+    padding: 0;
+}
+
+.invalid-feedback {
+    display: block;
+}
+
+.w-10 {
+    width: 10% !important;
+}
+
+.my-navbar {
+    background-color: #8acf96 !important;
+}
+
+.my-navbar .logo {
+    width: 26px;
+    height: 26px;
+}
+
+.my-footer {
+    background-color: #8acf96;
+    height: 32px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.cart-image {
+    width: 3.1rem;
+    padding: 0.25rem;
+    border-radius: 0.5rem;
+}
+
+.cart-item {
+    height: auto;
+}
+
+.nav-link {
+    color: black;
+    font-size: 20px;
+}
+
+
+.my-navbar .link a:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.my-navbar .link a.active {
+    text-decoration: none;
+    color: black;
+}
+
+.my-navbar .navbar-nav {
+    justify-content: center;
+    align-items: center;
+}
+
+
+h2 {
+    color: black;
+}
+
+label {
+    color: black;
+}
+
+
+.btn {
+    color: white;
+    background-color: #212529;
+}
+
+.btn-primary {
+    color: white;
+    background-color: #212529;
+}
+
+.btn:hover,
+.btn-primary:hover {
+    color: white;
+    background-color: #212529;
+}
+
+.pagination {
+    color: black;
+    background-color: #8acf96;
+}
+
+.navbar-nav form button:hover {
+    color: black;
+
+}

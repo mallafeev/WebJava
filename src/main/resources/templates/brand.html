@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html brand="ru" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+
+<head>
+    <title>Марки автомобилей</title>
+</head>
+
+<body>
+    <main layout:fragment="content">
+        <th:block th:switch="${items.size()}">
+            <h2 th:case="0">Данные отсутствуют</h2>
+            <th:block th:case="*">
+                <h2>Марки автомобилей</h2>
+                <div>
+                    <a href="/admin/brand/edit/" class="btn btn-primary">Добавить марку</a>
+                </div>
+                <table class="table">
+                    <caption></caption>
+                    <thead>
+                        <tr>
+                            <th scope="col" class="w-10">ID</th>
+                            <th scope="col" class="w-auto">Марка</th>
+                            <th scope="col" class="w-10"></th>
+                            <th scope="col" class="w-10"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="brand : ${items}">
+                            <th scope="row" th:text="${brand.id}"></th>
+                            <td th:text="${brand.name}"></td>
+                            <td>
+                                <form th:action="@{/admin/brand/edit/{id}(id=${brand.id})}" method="get">
+                                    <button brand="submit" class="btn btn-link button-link">Редактировать</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form th:action="@{/admin/brand/delete/{id}(id=${brand.id})}" method="post">
+                                    <button brand="submit" class="btn btn-link button-link"
+                                        onclick="return confirm('Вы уверены?')">Удалить</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </th:block>
+            <th:block th:replace="~{ pagination :: pagination (
+                                url=${'admin/brand'},
+                                totalPages=${totalPages},
+                                currentPage=${currentPage}) }" />
+        </th:block>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html brand="ru" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+
+<head>
+    <title>Понравившиеся</title>
+</head>
+
+<body>
+    <main layout:fragment="content">
+        <th:block th:switch="${items.size()}">
+            <h2 th:case="0">Данные отсутствуют</h2>
+            <th:block th:case="*">
+                <div class="container" style="text-align: center; color: black; font-size: 30px;">
+                    <h2>Желаемые автомобили</h2>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+                    <div th:each="desire : ${items}" style="padding: 10px 10px 10px 10px; justify-content: center;">
+                        <div th:text="${desire.name}" style="color: black; font-size: 30px;"></div>
+                        <div>
+                            <img src="/photo.jpg" alt="IMAGE" width="400" height="500" />
+                            <div th:text="${desire.description}" style="color: black; font-size: 20px;"></div>
+                            <div style="color: black; font-size: 20px;">
+                                Цена: <span th:text="${desire.price}"></span>
+                            </div>
+                            <div style="display: flex; justify-content: center; margin-top: 5;">
+                                <form th:action="@{/car/disdesire2/{id}(id=${desire.id}, page=${page})}" method="post">
+                                    <button type="submit" class="btn btn-dark"
+                                        onclick="return confirm('Вы уверены?')">Удалить</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+            <th:block th:replace="~{ pagination :: pagination (
+                                            url=${'car/desire'},
+                                            totalPages=${totalPages},
+                                            currentPage=${currentPage}) }" />
+        </th:block>
+    </main>
+</body>
+
+</html>

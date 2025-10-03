@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html brand="ru" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+
+<head>
+    <title>Редакторовать списки автомобилей</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .checkbox-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            /* Две колонки одинаковой ширины */
+            gap: 2px;
+            /* Отступ между колонками */
+        }
+
+        .form-check {
+            margin-bottom: 0.5px;
+            /* Отступ между чекбоксами по вертикали */
+        }
+    </style>
+</head>
+
+<body>
+    <main layout:fragment="content">
+        <form action="#" th:action="@{/admin/car/edit/{id}(id=${car.id})}" th:object="${car}" method="post">
+            <div class="mb-3">
+                <label for="id" class="form-label">ID</label>
+                <input type="text" th:value="*{id}" id="id" class="form-control" readonly disabled>
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Название</label>
+                <input brand="text" th:field="*{name}" id="name" class="form-control">
+                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback"></div>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Описание</label>
+                <input brand="text" th:field="*{description}" id="description" class="form-control">
+                <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="invalid-feedback">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Цена</label>
+                <input brand="text" th:field="*{price}" id="price" class="form-control">
+                <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="invalid-feedback">
+                </div>
+            </div>
+            <div class="mb-2">
+                <label for="brandId" class="form-label">Марка</label>
+                <select th:field="*{brandId}" id="brandId" class="form-select">
+                    <option selected value="">Укажите марку</option>
+                    <option th:each="brand : ${brands}" th:value="${brand.id}">[[${brand.name}]]</option>
+                </select>
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Пакет</label>
+                <div class="checkbox-container">
+                    <div class="form-check" th:each="pack : ${packsCheck}">
+                        <input class="form-check-input" th:field="*{packs}" th:value="${pack.id}" type="checkbox"
+                            th:id="'pack_' + ${pack.id}">
+                        <label class="form-check-label" th:field="*{packs}" th:for="'pack_' + ${pack.id}">
+                            [[${pack.name}]]
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 d-flex flex-row">
+                <button class="btn btn-primary me-2 button-fixed-width" type="submit">Сохранить</button>
+                <a class="btn btn-secondary button-fixed-width" href="/admin/car">Отмена</a>
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>

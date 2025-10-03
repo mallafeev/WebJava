@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html brand="ru" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+
+<head>
+    <title>Главная страница</title>
+</head>
+
+<body>
+    <main layout:fragment="content">
+        <div>
+            <a th:href="@{/list/car}" class="btn btn-primary">Каталог автомобилей</a>
+        </div>
+        <div>
+            <a th:href="@{/car/desire}" class="btn btn-primary">Желаемые автомобили</a>
+        </div>
+    </main>
+</body>
+
+</html>
